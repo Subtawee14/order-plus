@@ -1,5 +1,3 @@
-import { PlusIcon } from '@heroicons/react/20/solid';
-
 interface Props {
   title?: string;
   message?: string;

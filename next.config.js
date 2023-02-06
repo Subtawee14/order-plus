@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
+
+/**
+ * Need to store the api key in server side env variables
+ * But already restricted the api key to only be used from the domain order-pl.web.app/*
+ */
 const nextConfig = {
   reactStrictMode: true,
   publicRuntimeConfig: {

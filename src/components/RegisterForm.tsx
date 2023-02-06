@@ -27,6 +27,7 @@ const validationSchema = Yup.object({
 export default function RegisterForm() {
   const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>();
   const { signup } = useAuth();
   const router = useRouter();
 
@@ -39,7 +40,11 @@ export default function RegisterForm() {
       await signup(email, password);
       router.push('/login');
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
+          setErrorMessage('Email already in use');
+        }
+      }
       setIsError(true);
     } finally {
       setLoading(false);
@@ -125,7 +130,11 @@ export default function RegisterForm() {
           </div>
 
           {isError && (
-            <ErrorMessage message="Something went wrong. Please try again." />
+            <ErrorMessage
+              message={
+                errorMessage || 'Something went wrong. Please try again.'
+              }
+            />
           )}
 
           <div>
